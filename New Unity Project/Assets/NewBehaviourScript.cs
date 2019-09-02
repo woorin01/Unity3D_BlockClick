@@ -28,20 +28,21 @@ public class NewBehaviourScript : MonoBehaviour
             Debug.Log(hit.point);
             if (hit.transform.gameObject.CompareTag("Player"))
             {
-                if(hit.transform.position.x + 0.4f <= hit.point.x)
-                    mCube.transform.position = new Vector3(hit.transform.position.x + 1, hit.transform.position.y, hit.transform.position.z);
-                else if(hit.transform.position.x - 0.4f >= hit.point.x)
-                    mCube.transform.position = new Vector3(hit.transform.position.x - 1, hit.transform.position.y, hit.transform.position.z);
+                int x = 0, y = 0, z = 0;
 
-                if (hit.transform.position.y + 0.4f <= hit.point.y)
-                    mCube.transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
-                else if (hit.transform.position.y - 0.4f >= hit.point.y)
-                    mCube.transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y - 1, hit.transform.position.z);
+                if (hit.transform.position.x + 0.4f <= hit.point.x) { x = 1; y = 0; z = 0; }
+                else if (hit.transform.position.x - 0.4f >= hit.point.x) { x = -1; y = 0; z = 0; }
 
-                if (hit.transform.position.z + 0.4f <= hit.point.z)
-                    mCube.transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z + 1);
-                else if (hit.transform.position.z - 0.4f >= hit.point.z)
-                    mCube.transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y, hit.transform.position.z - 1);
+                if (hit.transform.position.y + 0.4f <= hit.point.y) { x = 0; y = 1; z = 0; }
+                else if (hit.transform.position.y - 0.4f >= hit.point.y) { x = 0; y = -1; z = 0; }
+
+                if (hit.transform.position.z + 0.4f <= hit.point.z) { x = 0; y = 0; z = 1; }
+                else if (hit.transform.position.z - 0.4f >= hit.point.z) { x = 0; y = 0; z = -1; }
+
+                mCube.transform.position = new Vector3(hit.transform.position.x + x, hit.transform.position.y + y, hit.transform.position.z + z);
+
+                if (Input.GetMouseButtonUp(0))
+                    Instantiate<GameObject>(Resources.Load<GameObject>("Cube")).transform.position = new Vector3(hit.transform.position.x + x, hit.transform.position.y + y, hit.transform.position.z + z);
 
                 mCube.SetActive(true);
             }
