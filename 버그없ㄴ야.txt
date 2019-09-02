@@ -2,4 +2,5 @@
 날개기능버그고침
 달리기1
 달리기2
-릴리즈ddqkr,tmwkd
+릴리즈
+dldldld
