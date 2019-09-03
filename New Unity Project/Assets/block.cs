@@ -4,5 +4,11 @@ using UnityEngine;
 
 public class block : MonoBehaviour
 {
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
 
+        }
+    }
 }

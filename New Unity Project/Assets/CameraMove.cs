@@ -8,23 +8,18 @@ public class CameraMove : MonoBehaviour
     private Vector3 gap;
     private Quaternion targetRotation;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
 
         //플레이어
-        //transform.position += transform.forward * y;// * Time.deltaTime * 3;
-        //transform.position += transform.right * x;// * Time.deltaTime * 3;
+        transform.position += transform.forward * y * Time.deltaTime * 3;
+        transform.position += transform.right * x * Time.deltaTime * 3;
 
         //자유시점
-        camera.transform.position += camera.transform.forward * y * 1.5f;
-        camera.transform.position += camera.transform.right * x * 1.5f;
+        //camera.transform.position += camera.transform.forward * y * 1.5f;
+        //camera.transform.position += camera.transform.right * x * 1.5f;
 
         gap.x += Input.GetAxis("Mouse Y") * 1.5f * -1;
         gap.y += Input.GetAxis("Mouse X") * 1.5f;
@@ -38,6 +33,14 @@ public class CameraMove : MonoBehaviour
         camera.transform.rotation = targetRotation;
 
         //transform.rotation = Quaternion.Euler(gap.x, gap.y, 0);
-        //transform.rotation = Quaternion.Euler(0, gap.y, 0); //플레이어 회전
+        transform.rotation = Quaternion.Euler(0, gap.y, 0); //플레이어 회전
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);
+        }
+
+        GameObject.FindWithTag("Respawn").transform.position = new Vector3(transform.position.x, 180, transform.position.z);
     }
 }

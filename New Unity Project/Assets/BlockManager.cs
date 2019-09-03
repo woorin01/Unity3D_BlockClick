@@ -6,7 +6,7 @@ public class BlockManager : MonoBehaviour
 {
     public GameObject mCube;
     public GameObject[,,] mBlocks;
-    public ChangeColor changeColor;
+    public ChangeImage changeImage;
     public int startingPoint;
     private int mapEnd = 300;
     private int mapStart = 0;
@@ -15,7 +15,7 @@ public class BlockManager : MonoBehaviour
     {
         mCube.SetActive(false);
         mBlocks = new GameObject[mapEnd, mapEnd, mapEnd];
-        changeColor = GetComponent<ChangeColor>();
+        changeImage = GetComponent<ChangeImage>();
 
         Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
         Cursor.visible = false;
@@ -24,9 +24,9 @@ public class BlockManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 10; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 10; j++)
             {
                 mBlocks[startingPoint + i, mapEnd / 2, startingPoint + j] = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
                 mBlocks[startingPoint + i, mapEnd / 2, startingPoint + j].transform.position = new Vector3(startingPoint + i, mapEnd / 2, startingPoint + j);
@@ -38,8 +38,10 @@ public class BlockManager : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));//Ray를 쏠 지점을 화면의 정가운데로 한다
 
-        if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit))
+        if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 10f))
         {
+            if (hit.transform.gameObject.CompareTag("Finish"))
+                return;
             if (hit.transform.gameObject.CompareTag("Player"))
             {
                 int x = 0, y = 0, z = 0;
@@ -60,8 +62,11 @@ public class BlockManager : MonoBehaviour
                 {
                     GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
                     temp.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
-                    temp.GetComponent<MeshRenderer>().material.color = changeColor.color;
+                    temp.GetComponent<MeshRenderer>().material.color = changeImage.color;
+                    temp.GetComponent<MeshRenderer>().material.mainTexture = Resources.Load<Texture>(changeImage.imageNum.ToString());
+
                     mBlocks[(int)htp.x + x, (int)htp.y + y, (int)htp.z + z] = temp;
+
                     mCube.SetActive(false);
                 }
                 else if(Input.GetMouseButtonUp(0))
@@ -74,7 +79,7 @@ public class BlockManager : MonoBehaviour
         }
         else
             mCube.SetActive(false);
-
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 10f, Color.blue, 0.3f);
     }
 
     private bool IsBlockNone(int x, int y, int z, Vector3 htp)
