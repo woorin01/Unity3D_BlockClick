@@ -243,6 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mCube: {fileID: 2090426979}
+  startingPoint: 148
 --- !u!4 &436962395
 Transform:
   m_ObjectHideFlags: 0

@@ -5,13 +5,18 @@ using UnityEngine;
 public class BlockManager : MonoBehaviour
 {
     public GameObject mCube;
-    public GameObject[,,] mBlocks = new GameObject[200, 200, 200];
+    private int mapEnd = 300;
+    private int mapStart = 0;
+    public GameObject[,,] mBlocks;
+    public int startingPoint;
     private void Awake()
     {
         mCube.SetActive(false);
+        mBlocks = new GameObject[mapEnd, mapEnd, mapEnd];
 
         Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
         Cursor.visible = false;
+
     }
 
     void Start()
@@ -20,8 +25,8 @@ public class BlockManager : MonoBehaviour
         {
             for (int j = 0; j < 3; j++)
             {
-                mBlocks[99 + i, 100, 99 + j] = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
-                mBlocks[99 + i, 100, 99 + j].transform.position = new Vector3(99 + i, 100, 99 + j);
+                mBlocks[startingPoint + i, mapEnd / 2, startingPoint + j] = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
+                mBlocks[startingPoint + i, mapEnd / 2, startingPoint + j].transform.position = new Vector3(startingPoint + i, mapEnd / 2, startingPoint + j);
             }
         }
     }
@@ -37,22 +42,23 @@ public class BlockManager : MonoBehaviour
                 int x = 0, y = 0, z = 0;
                 Vector3 htp = hit.transform.position;
 
-                if (htp.x + 0.5f <= hit.point.x && IsBlockNone((int)htp.x + 1, (int)htp.y, (int)htp.z)) { x = 1; y = 0; z = 0; }
-                else if (htp.x - 0.5f >= hit.point.x && IsBlockNone((int)htp.x - 1, (int)htp.y, (int)htp.z)) { x = -1; y = 0; z = 0; }
+                if (htp.x + 0.5f <= hit.point.x && IsBlockNone((int)htp.x + 1, (int)htp.y, (int)htp.z, htp)) { x = 1; y = 0; z = 0; }
+                else if (htp.x - 0.5f >= hit.point.x && IsBlockNone((int)htp.x - 1, (int)htp.y, (int)htp.z, htp)) { x = -1; y = 0; z = 0; }
 
-                if (htp.y + 0.5f <= hit.point.y && IsBlockNone((int)htp.x, (int)htp.y + 1, (int)htp.z)) { x = 0; y = 1; z = 0; }
-                else if (htp.y - 0.5f >= hit.point.y && IsBlockNone((int)htp.x, (int)htp.y - 1, (int)htp.z)) { x = 0; y = -1; z = 0; }
+                if (htp.y + 0.5f <= hit.point.y && IsBlockNone((int)htp.x, (int)htp.y + 1, (int)htp.z, htp)) { x = 0; y = 1; z = 0; }
+                else if (htp.y - 0.5f >= hit.point.y && IsBlockNone((int)htp.x, (int)htp.y - 1, (int)htp.z, htp)) { x = 0; y = -1; z = 0; }
 
-                if (htp.z + 0.5f <= hit.point.z && IsBlockNone((int)htp.x, (int)htp.y, (int)htp.z + 1)) { x = 0; y = 0; z = 1; }
-                else if (htp.z - 0.5f >= hit.point.z && IsBlockNone((int)htp.x, (int)htp.y, (int)htp.z - 1)) { x = 0; y = 0; z = -1; }
+                if (htp.z + 0.5f <= hit.point.z && IsBlockNone((int)htp.x, (int)htp.y, (int)htp.z + 1, htp)) { x = 0; y = 0; z = 1; }
+                else if (htp.z - 0.5f >= hit.point.z && IsBlockNone((int)htp.x, (int)htp.y, (int)htp.z - 1, htp)) { x = 0; y = 0; z = -1; }
 
                 mCube.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
 
-                if (Input.GetMouseButtonUp(1) && IsBlockNone((int)htp.x + x, (int)htp.y + y, (int)htp.z + z))
+                if (Input.GetMouseButtonUp(1) && IsBlockNone((int)htp.x + x, (int)htp.y + y, (int)htp.z + z, htp))
                 {
                     GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
                     temp.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
                     mBlocks[(int)htp.x + x, (int)htp.y + y, (int)htp.z + z] = temp;
+                    mCube.SetActive(false);
                 }
 
             }
@@ -62,8 +68,22 @@ public class BlockManager : MonoBehaviour
 
     }
 
-    private bool IsBlockNone(int x, int y, int z)
+    private bool IsBlockNone(int x, int y, int z, Vector3 htp)
     {
+        Debug.Log(x + "+" + htp.x);
+        if(x - htp.x == 1  || x - htp.x == -1 ||
+           y - htp.y == 1 || y - htp.y == -1 ||
+           z - htp.z ==1  || z - htp.z == -1)
+        {
+            if (x >= mapEnd || x <= -1 ||
+                y >= mapEnd || y <= -1 ||
+                z >= mapEnd || z <= -1 )
+            {
+                mCube.SetActive(false);
+                return false;
+            }
+        }
+        
         if (mBlocks[x, y, z] != null)
         {
             mCube.SetActive(false);
