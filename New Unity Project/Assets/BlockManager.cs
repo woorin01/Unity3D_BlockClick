@@ -44,8 +44,8 @@ public class BlockManager : MonoBehaviour
                 if (htp.y + 0.4f <= hit.point.y && IsBlockNone((int)htp.x, (int)htp.y + 1, (int)htp.z)) { x = 0; y = 1; z = 0; }
                 else if (htp.y - 0.4f >= hit.point.y && IsBlockNone((int)htp.x, (int)htp.y - 1, (int)htp.z)) { x = 0; y = -1; z = 0; }
 
-                if (htp.z + 0.4f <= hit.point.z && IsBlockNone((int)htp.x, (int)htp.y, (int)htp.z + 1)) { x = 0; y = 0; z = 1; }
-                else if (htp.z - 0.4f >= hit.point.z && IsBlockNone((int)htp.x, (int)htp.y, (int)htp.z - 1)) { x = 0; y = 0; z = -1; }
+                if (htp.z + 0.5f <= hit.point.z && IsBlockNone((int)htp.x, (int)htp.y, (int)htp.z + 1)) { x = 0; y = 0; z = 1; }
+                else if (htp.z - 0.5f >= hit.point.z && IsBlockNone((int)htp.x, (int)htp.y, (int)htp.z - 1)) { x = 0; y = 0; z = -1; }
 
                 mCube.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
 

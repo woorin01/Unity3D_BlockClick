@@ -21,8 +21,8 @@ public class CameraMove : MonoBehaviour
         camera.transform.position += camera.transform.forward * y;
         camera.transform.position += camera.transform.right * x;
 
-        gap.x += Input.GetAxis("Mouse Y") * 1 * -1;
-        gap.y += Input.GetAxis("Mouse X") * 1;
+        gap.x += Input.GetAxis("Mouse Y") * 1.5f * -1;
+        gap.y += Input.GetAxis("Mouse X") * 1.5f;
 
         // 카메라 회전범위 제한.
         gap.x = Mathf.Clamp(gap.x, -90f, 90f);
