@@ -23,8 +23,8 @@ public class CameraMove : MonoBehaviour
         //transform.position += transform.right * x;// * Time.deltaTime * 3;
 
         //자유시점
-        camera.transform.position += camera.transform.forward * y;
-        camera.transform.position += camera.transform.right * x;
+        camera.transform.position += camera.transform.forward * y * 1.5f;
+        camera.transform.position += camera.transform.right * x * 1.5f;
 
         gap.x += Input.GetAxis("Mouse Y") * 1.5f * -1;
         gap.y += Input.GetAxis("Mouse X") * 1.5f;

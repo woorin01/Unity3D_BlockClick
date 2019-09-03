@@ -5,14 +5,17 @@ using UnityEngine;
 public class BlockManager : MonoBehaviour
 {
     public GameObject mCube;
+    public GameObject[,,] mBlocks;
+    public ChangeColor changeColor;
+    public int startingPoint;
     private int mapEnd = 300;
     private int mapStart = 0;
-    public GameObject[,,] mBlocks;
-    public int startingPoint;
+
     private void Awake()
     {
         mCube.SetActive(false);
         mBlocks = new GameObject[mapEnd, mapEnd, mapEnd];
+        changeColor = GetComponent<ChangeColor>();
 
         Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
         Cursor.visible = false;
@@ -57,6 +60,7 @@ public class BlockManager : MonoBehaviour
                 {
                     GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
                     temp.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
+                    temp.GetComponent<MeshRenderer>().material.color = changeColor.color;
                     mBlocks[(int)htp.x + x, (int)htp.y + y, (int)htp.z + z] = temp;
                     mCube.SetActive(false);
                 }
