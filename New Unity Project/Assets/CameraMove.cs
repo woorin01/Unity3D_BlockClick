@@ -18,6 +18,11 @@ public class CameraMove : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
+        //플레이어
+        //transform.position += transform.forward * y;// * Time.deltaTime * 3;
+        //transform.position += transform.right * x;// * Time.deltaTime * 3;
+
+        //자유시점
         camera.transform.position += camera.transform.forward * y;
         camera.transform.position += camera.transform.right * x;
 
@@ -30,7 +35,9 @@ public class CameraMove : MonoBehaviour
         targetRotation = Quaternion.Euler(gap);
 
         // 카메라벡터 객체에 Axis객체의 x,z회전 값을 제외한 y값만을 넘긴다.
-        Quaternion q = targetRotation;
-        camera.transform.rotation = q;
+        camera.transform.rotation = targetRotation;
+
+        //transform.rotation = Quaternion.Euler(gap.x, gap.y, 0);
+        //transform.rotation = Quaternion.Euler(0, gap.y, 0); //플레이어 회전
     }
 }

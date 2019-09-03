@@ -60,6 +60,11 @@ public class BlockManager : MonoBehaviour
                     mBlocks[(int)htp.x + x, (int)htp.y + y, (int)htp.z + z] = temp;
                     mCube.SetActive(false);
                 }
+                else if(Input.GetMouseButtonUp(0))
+                {
+                    Destroy(mBlocks[(int)htp.x, (int)htp.y, (int)htp.z]);
+                    mBlocks[(int)htp.x, (int)htp.y, (int)htp.z] = null;
+                }
 
             }
         }
@@ -70,7 +75,6 @@ public class BlockManager : MonoBehaviour
 
     private bool IsBlockNone(int x, int y, int z, Vector3 htp)
     {
-        Debug.Log(x + "+" + htp.x);
         if(x - htp.x == 1  || x - htp.x == -1 ||
            y - htp.y == 1 || y - htp.y == -1 ||
            z - htp.z ==1  || z - htp.z == -1)
