@@ -10,6 +10,9 @@ public class BlockManager : MonoBehaviour
     private void Awake()
     {
         mCube.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
+        Cursor.visible = false;
     }
 
     void Start()
@@ -26,7 +29,7 @@ public class BlockManager : MonoBehaviour
 
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
 
         if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit))
         {
@@ -48,7 +51,9 @@ public class BlockManager : MonoBehaviour
 
                 if (Input.GetMouseButtonUp(1))
                 {
-                    Instantiate<GameObject>(Resources.Load<GameObject>("Cube")).transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
+                    GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
+                    temp.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
+                    mBlocks[(int)htp.x + x, (int)htp.y + y, (int)htp.z + z] = temp;
                 }
 
                 mCube.SetActive(true);
