@@ -15,6 +15,7 @@ public class BlockManager : MonoBehaviour
     private void Awake()
     {
         mCube.SetActive(false);
+        mCube.GetComponent<GhostBlock>().InPlayer = false;
         mBlocks = new GameObject[mapEnd, mapEnd, mapEnd];
         changeImage = GetComponent<ChangeImage>();
 
@@ -38,9 +39,11 @@ public class BlockManager : MonoBehaviour
 
     void Update()
     {
+        int layerMask = 1 << LayerMask.NameToLayer("TranslucentBlock");    // ignore LayerMask
+        layerMask = ~layerMask;
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));//Ray를 쏠 지점을 화면의 정가운데로 한다
 
-        if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 7f))
+        if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 6f, layerMask))
         {
             if (hit.transform.gameObject.CompareTag("Player"))
             {

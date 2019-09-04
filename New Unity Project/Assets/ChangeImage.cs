@@ -13,6 +13,7 @@ public class ChangeImage : MonoBehaviour
     void Start()
     {
         image.color = color;
+        ghostBlockMaterial.mainTexture = Resources.Load<Texture>(imageNum.ToString());
     }
 
     void Update()
