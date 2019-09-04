@@ -518,7 +518,7 @@ MonoBehaviour:
   image: {fileID: 1814006577}
   ghostBlockMaterial: {fileID: 0}
   imageNum: 0
-  imageMaxNum: 8
+  imageMaxNum: 9
 --- !u!136 &444363612
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -624,7 +624,7 @@ MonoBehaviour:
   image: {fileID: 1814006577}
   ghostBlockMaterial: {fileID: 2100000, guid: 2d2bebb680b42b54bbf055c7d017469d, type: 2}
   imageNum: 0
-  imageMaxNum: 8
+  imageMaxNum: 9
 --- !u!114 &463397033
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,8 +8,10 @@ public class ChangeImage : MonoBehaviour
     public Color color = new Color(1,1, 1);
     public Image image;
     public Material ghostBlockMaterial;
+
     public int imageNum = 0;
     public int imageMaxNum;
+
     void Start()
     {
         image.color = color;
@@ -26,35 +28,25 @@ public class ChangeImage : MonoBehaviour
     {
         float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
 
-        if (scroll > 0)
+        if(scroll != 0)
         {
-            if (imageNum < imageMaxNum)
+            if (scroll > 0)
             {
-                imageNum++;
-                image.sprite = Resources.Load<Sprite>(imageNum.ToString());
-                ghostBlockMaterial.mainTexture = Resources.Load<Texture>(imageNum.ToString());
+                if (imageNum < imageMaxNum)
+                    imageNum++;
+                else
+                    imageNum = 0;
             }
-            else
+            if (scroll < 0)
             {
-                imageNum = 0;
-                image.sprite = Resources.Load<Sprite>(imageNum.ToString());
-                ghostBlockMaterial.mainTexture = Resources.Load<Texture>(imageNum.ToString());
+                if (imageNum > 0)
+                    imageNum--;
+                else
+                    imageNum = imageMaxNum;
             }
-        }
-        if (scroll < 0)
-        {
-            if (imageNum > 0)
-            {
-                imageNum--;
-                image.sprite = Resources.Load<Sprite>(imageNum.ToString());
-                ghostBlockMaterial.mainTexture = Resources.Load<Texture>(imageNum.ToString());
-            }
-            else
-            {
-                imageNum = imageMaxNum;
-                image.sprite = Resources.Load<Sprite>(imageNum.ToString());
-                ghostBlockMaterial.mainTexture = Resources.Load<Texture>(imageNum.ToString());
-            }
+
+            image.sprite = Resources.Load<Sprite>(imageNum.ToString());
+            ghostBlockMaterial.mainTexture = Resources.Load<Texture>(imageNum.ToString());
         }
     }
     public void ChangeBlockColor()

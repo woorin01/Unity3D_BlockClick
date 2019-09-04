@@ -22,6 +22,7 @@ public class GhostBlock : MonoBehaviour
         {
             Debug.Log("응기잇");
             inPlayer = true;
+            GetComponent<MeshRenderer>().enabled = false;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -30,6 +31,7 @@ public class GhostBlock : MonoBehaviour
         {
             Debug.Log("하읏");
             inPlayer = false;
+            GetComponent<MeshRenderer>().enabled = true;
         }
     }
 }

@@ -35,15 +35,27 @@ public class BlockManager : MonoBehaviour
                 mBlocks[startingPoint + i, 20, startingPoint + j].transform.parent = GameObject.Find("Map").transform;
             }
         }
+        Debug.Log("Start1");
+
+        Debug.Log("Start2");
     }
 
+    IEnumerator a()
+    {
+        Debug.Log("yield1");
+        yield return null;
+        Debug.Log("yield2");
+    }
     void Update()
     {
-        int layerMask = 1 << LayerMask.NameToLayer("TranslucentBlock");    // ignore LayerMask
+        StartCoroutine("a");
+        Debug.Log("Update");
+        int layerMask = 1 << LayerMask.NameToLayer("TranslucentBlock");    // TranslucentBlock레이어만 무시하고 충돌
         layerMask = ~layerMask;
+
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));//Ray를 쏠 지점을 화면의 정가운데로 한다
 
-        if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 6f, layerMask))
+        if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 5f, layerMask))
         {
             if (hit.transform.gameObject.CompareTag("Player"))
             {
@@ -61,7 +73,7 @@ public class BlockManager : MonoBehaviour
 
                 mCube.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
 
-                if (Input.GetMouseButtonUp(1) && IsBlockNone((int)htp.x + x, (int)htp.y + y, (int)htp.z + z, htp) && !mCube.GetComponent<GhostBlock>().InPlayer)
+                if (Input.GetMouseButtonDown(1) && IsBlockNone((int)htp.x + x, (int)htp.y + y, (int)htp.z + z, htp) && !mCube.GetComponent<GhostBlock>().InPlayer)
                 {
                     GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
                     temp.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
@@ -72,7 +84,7 @@ public class BlockManager : MonoBehaviour
 
                     mCube.SetActive(false);
                 }
-                else if(Input.GetMouseButtonUp(0))
+                else if(Input.GetMouseButtonDown(0))
                 {
                     Destroy(mBlocks[(int)htp.x, (int)htp.y, (int)htp.z]);
                     mBlocks[(int)htp.x, (int)htp.y, (int)htp.z] = null;
