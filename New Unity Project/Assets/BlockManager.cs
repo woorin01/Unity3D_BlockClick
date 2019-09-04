@@ -61,7 +61,7 @@ public class BlockManager : MonoBehaviour
 
                 mCube.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
 
-                if (Input.GetMouseButtonUp(1) && IsBlockNone((int)htp.x + x, (int)htp.y + y, (int)htp.z + z, htp))
+                if (Input.GetMouseButtonUp(1) && IsBlockNone((int)htp.x + x, (int)htp.y + y, (int)htp.z + z, htp) && !mCube.GetComponent<GhostBlock>().InPlayer)
                 {
                     GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
                     temp.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
