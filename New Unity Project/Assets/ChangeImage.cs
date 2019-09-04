@@ -7,6 +7,7 @@ public class ChangeImage : MonoBehaviour
 {
     public Color color = new Color(1,1, 1);
     public Image image;
+    public Material ghostBlockMaterial;
     public int imageNum = 0;
     public int imageMaxNum;
     void Start()
@@ -30,11 +31,13 @@ public class ChangeImage : MonoBehaviour
             {
                 imageNum++;
                 image.sprite = Resources.Load<Sprite>(imageNum.ToString());
+                ghostBlockMaterial.mainTexture = Resources.Load<Texture>(imageNum.ToString());
             }
             else
             {
                 imageNum = 0;
                 image.sprite = Resources.Load<Sprite>(imageNum.ToString());
+                ghostBlockMaterial.mainTexture = Resources.Load<Texture>(imageNum.ToString());
             }
         }
         if (scroll < 0)
@@ -43,11 +46,13 @@ public class ChangeImage : MonoBehaviour
             {
                 imageNum--;
                 image.sprite = Resources.Load<Sprite>(imageNum.ToString());
+                ghostBlockMaterial.mainTexture = Resources.Load<Texture>(imageNum.ToString());
             }
             else
             {
                 imageNum = imageMaxNum;
                 image.sprite = Resources.Load<Sprite>(imageNum.ToString());
+                ghostBlockMaterial.mainTexture = Resources.Load<Texture>(imageNum.ToString());
             }
         }
     }

@@ -8,7 +8,8 @@ public class BlockManager : MonoBehaviour
     public GameObject[,,] mBlocks;
     public ChangeImage changeImage;
     public int startingPoint;
-    private int mapEnd = 300;
+
+    private int mapEnd = 400;
     private int mapStart = 0;
 
     private void Awake()
@@ -24,12 +25,13 @@ public class BlockManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100; i++)
         {
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < 100; j++)
             {
-                mBlocks[startingPoint + i, mapEnd / 2, startingPoint + j] = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
-                mBlocks[startingPoint + i, mapEnd / 2, startingPoint + j].transform.position = new Vector3(startingPoint + i, mapEnd / 2, startingPoint + j);
+                mBlocks[startingPoint + i, 20, startingPoint + j] = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
+                mBlocks[startingPoint + i, 20, startingPoint + j].transform.position = new Vector3(startingPoint + i, 20, startingPoint + j);
+                mBlocks[startingPoint + i, 20, startingPoint + j].transform.parent = GameObject.Find("Map").transform;
             }
         }
     }
@@ -38,10 +40,8 @@ public class BlockManager : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));//Ray를 쏠 지점을 화면의 정가운데로 한다
 
-        if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 10f))
+        if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 7f))
         {
-            if (hit.transform.gameObject.CompareTag("Finish"))
-                return;
             if (hit.transform.gameObject.CompareTag("Player"))
             {
                 int x = 0, y = 0, z = 0;
@@ -84,23 +84,23 @@ public class BlockManager : MonoBehaviour
 
     private bool IsBlockNone(int x, int y, int z, Vector3 htp)
     {
-        if(x - htp.x == 1  || x - htp.x == -1 ||
+        if (mBlocks[x, y, z] != null)//블록이 이미 있는 곳에 고스트 블럭, 블럭 생성 불가하게
+        {
+            mCube.SetActive(false);
+            return false;
+        }
+
+        if (x - htp.x == 1 || x - htp.x == -1 || //맵끝 판별
            y - htp.y == 1 || y - htp.y == -1 ||
-           z - htp.z ==1  || z - htp.z == -1)
+           z - htp.z == 1 || z - htp.z == -1)
         {
             if (x >= mapEnd || x <= -1 ||
                 y >= mapEnd || y <= -1 ||
-                z >= mapEnd || z <= -1 )
+                z >= mapEnd || z <= -1)
             {
                 mCube.SetActive(false);
                 return false;
             }
-        }
-        
-        if (mBlocks[x, y, z] != null)
-        {
-            mCube.SetActive(false);
-            return false;
         }
 
         mCube.SetActive(true);
