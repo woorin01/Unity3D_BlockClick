@@ -14,8 +14,6 @@ public class BlockManager : MonoBehaviour
 
     private void Awake()
     {
-        mCube.MeshRenderer.enabled = false;
-        mCube.InPlayer = false;
         mBlocks = new GameObject[mapEnd, mapEnd, mapEnd];
         changeImage = GetComponent<ChangeImage>();
 
@@ -26,6 +24,9 @@ public class BlockManager : MonoBehaviour
 
     void Start()
     {
+        mCube.MeshRenderer.enabled = false;
+        mCube.InPlayer = false;
+
         for (int i = 0; i < 100; i++)
         {
             for (int j = 0; j < 100; j++)

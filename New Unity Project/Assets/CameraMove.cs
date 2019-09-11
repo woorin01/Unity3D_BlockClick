@@ -10,6 +10,7 @@ public class CameraMove : MonoBehaviour
 
     void Update()
     {
+        //이동
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
@@ -21,19 +22,21 @@ public class CameraMove : MonoBehaviour
         //camera.transform.position += camera.transform.forward * y * 1.5f;
         //camera.transform.position += camera.transform.right * x * 1.5f;
 
+        //마우스에 따른 회전
         gap.x += Input.GetAxis("Mouse Y") * 1.5f * -1;
         gap.y += Input.GetAxis("Mouse X") * 1.5f;
+        gap.z = 0f;
 
         // 카메라 회전범위 제한.
         gap.x = Mathf.Clamp(gap.x, -90f, 90f);
-        gap.z = 0;
+
         // 회전 값을 변수에 저장.
         targetRotation = Quaternion.Euler(gap);
 
         // 카메라벡터 객체에 Axis객체의 x,z회전 값을 제외한 y값만을 넘긴다.
         camera.transform.rotation = targetRotation;
 
-        //transform.rotation = Quaternion.Euler(gap.x, gap.y, 0);
+        //transform.rotation = Quaternion.Euler(gap);
         transform.rotation = Quaternion.Euler(0, gap.y, 0); //플레이어 회전
 
         if (Input.GetKeyDown(KeyCode.Space))
