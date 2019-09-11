@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 465629c66d24ab24d835bdc70afd931c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mCube: {fileID: 2090426979}
+  mCube: {fileID: 0}
   changeImage: {fileID: 0}
   startingPoint: 148
 --- !u!23 &444363607
@@ -637,7 +637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 465629c66d24ab24d835bdc70afd931c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mCube: {fileID: 2090426979}
+  mCube: {fileID: 2090426980}
   changeImage: {fileID: 0}
   startingPoint: 100
 --- !u!4 &463397038 stripped
@@ -1206,9 +1206,15 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &2090426979 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4907238423454482276, guid: f300b019716be6049bd5f1e39805994a,
+--- !u!114 &2090426980 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8065485413243851314, guid: f300b019716be6049bd5f1e39805994a,
     type: 3}
   m_PrefabInstance: {fileID: 940318434}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f54d2a79e709a4eb73dfd21fb9b70d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

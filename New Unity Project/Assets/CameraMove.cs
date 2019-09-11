@@ -26,6 +26,7 @@ public class CameraMove : MonoBehaviour
 
         // 카메라 회전범위 제한.
         gap.x = Mathf.Clamp(gap.x, -90f, 90f);
+        gap.z = 0;
         // 회전 값을 변수에 저장.
         targetRotation = Quaternion.Euler(gap);
 
@@ -35,7 +36,7 @@ public class CameraMove : MonoBehaviour
         //transform.rotation = Quaternion.Euler(gap.x, gap.y, 0);
         transform.rotation = Quaternion.Euler(0, gap.y, 0); //플레이어 회전
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);

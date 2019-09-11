@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
-    public GameObject mCube;
+    public GhostBlock mCube;
     public GameObject[,,] mBlocks;
     public ChangeImage changeImage;
     public int startingPoint;
@@ -14,8 +14,8 @@ public class BlockManager : MonoBehaviour
 
     private void Awake()
     {
-        mCube.SetActive(false);
-        mCube.GetComponent<GhostBlock>().InPlayer = false;
+        mCube.MeshRenderer.enabled = false;
+        mCube.InPlayer = false;
         mBlocks = new GameObject[mapEnd, mapEnd, mapEnd];
         changeImage = GetComponent<ChangeImage>();
 
@@ -42,14 +42,14 @@ public class BlockManager : MonoBehaviour
 
     IEnumerator a()
     {
-        Debug.Log("yield1");
+        //Debug.Log("yield1");
         yield return null;
-        Debug.Log("yield2");
+        //Debug.Log("yield2");
     }
     void Update()
     {
-        StartCoroutine("a");
-        Debug.Log("Update");
+        //StartCoroutine("a");
+        //Debug.Log("Update");
         int layerMask = 1 << LayerMask.NameToLayer("TranslucentBlock");    // TranslucentBlock레이어만 무시하고 충돌
         layerMask = ~layerMask;
 
@@ -82,9 +82,9 @@ public class BlockManager : MonoBehaviour
 
                     mBlocks[(int)htp.x + x, (int)htp.y + y, (int)htp.z + z] = temp;
 
-                    mCube.SetActive(false);
+                    mCube.MeshRenderer.enabled = false;
                 }
-                else if(Input.GetMouseButtonDown(0))
+                else if (Input.GetMouseButtonDown(0))
                 {
                     Destroy(mBlocks[(int)htp.x, (int)htp.y, (int)htp.z]);
                     mBlocks[(int)htp.x, (int)htp.y, (int)htp.z] = null;
@@ -93,7 +93,7 @@ public class BlockManager : MonoBehaviour
             }
         }
         else
-            mCube.SetActive(false);
+            mCube.MeshRenderer.enabled = false;
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 10f, Color.blue, 0.3f);
     }
 
@@ -101,7 +101,7 @@ public class BlockManager : MonoBehaviour
     {
         if (mBlocks[x, y, z] != null)//블록이 이미 있는 곳에 고스트 블럭, 블럭 생성 불가하게
         {
-            mCube.SetActive(false);
+            mCube.MeshRenderer.enabled = false;
             return false;
         }
 
@@ -113,12 +113,13 @@ public class BlockManager : MonoBehaviour
                 y >= mapEnd || y <= -1 ||
                 z >= mapEnd || z <= -1)
             {
-                mCube.SetActive(false);
+                mCube.MeshRenderer.enabled = false;
                 return false;
             }
         }
 
-        mCube.SetActive(true);
+        if (!mCube.InPlayer)
+            mCube.MeshRenderer.enabled = true;
         return true;
     }
 }

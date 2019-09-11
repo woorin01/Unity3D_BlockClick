@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class GhostBlock : MonoBehaviour
 {
+    private MeshRenderer meshRenderer;
+    public MeshRenderer MeshRenderer
+    {
+        get
+        {
+            return meshRenderer;
+        }
+        set
+        {
+            meshRenderer = value;
+        }
+    }
+
     private bool inPlayer;
     public bool InPlayer
     {
@@ -16,13 +29,19 @@ public class GhostBlock : MonoBehaviour
             inPlayer = value;
         }
     }
+
+    private void Awake()
+    {
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Finish"))
+        if (other.CompareTag("Finish"))
         {
             Debug.Log("응기잇");
             inPlayer = true;
-            GetComponent<MeshRenderer>().enabled = false;
+            meshRenderer.enabled = false;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -31,7 +50,7 @@ public class GhostBlock : MonoBehaviour
         {
             Debug.Log("하읏");
             inPlayer = false;
-            GetComponent<MeshRenderer>().enabled = true;
+            meshRenderer.enabled = true;
         }
     }
 }

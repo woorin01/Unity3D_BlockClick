@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ChangeImage : MonoBehaviour
 {
-    public Color color = new Color(1,1, 1);
+    public Color color = new Color(1, 1, 1);
     public Image image;
     public Material ghostBlockMaterial;
 
@@ -28,7 +28,7 @@ public class ChangeImage : MonoBehaviour
     {
         float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
 
-        if(scroll != 0)
+        if (scroll != 0)
         {
             if (scroll > 0)
             {
