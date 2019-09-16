@@ -55,6 +55,7 @@ public class BlockManager : MonoBehaviour
         layerMask = ~layerMask;
 
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));//Ray를 쏠 지점을 화면의 정가운데로 한다
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 5f, layerMask))
         {
