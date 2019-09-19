@@ -11,11 +11,12 @@ public class BlockManager : MonoBehaviour
 
     private int mapEnd = 400;
     private int mapStart = 0;
+    private Shader glassShader;
 
     private void Awake()
     {
+        glassShader = Shader.Find("Unlit/Transparent");
         mBlocks = new GameObject[mapEnd, mapEnd, mapEnd];
-        changeImage = GetComponent<ChangeImage>();
 
         Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
         Cursor.visible = false;
@@ -80,7 +81,9 @@ public class BlockManager : MonoBehaviour
                     GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
                     temp.transform.position = new Vector3(htp.x + x, htp.y + y, htp.z + z);
                     temp.GetComponent<MeshRenderer>().material.color = changeImage.color;
-                    temp.GetComponent<MeshRenderer>().material.mainTexture = Resources.Load<Texture>(changeImage.imageNum.ToString());
+                    temp.GetComponent<MeshRenderer>().material.mainTexture = changeImage.ghostBlockMaterial.mainTexture;
+                    if (changeImage.imageNum.Equals(8))
+                        temp.GetComponent<MeshRenderer>().material.shader = glassShader;
 
                     mBlocks[(int)htp.x + x, (int)htp.y + y, (int)htp.z + z] = temp;
 
