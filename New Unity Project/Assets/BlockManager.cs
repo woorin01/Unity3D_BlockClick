@@ -33,10 +33,12 @@ public class BlockManager : MonoBehaviour
         {
             for (int j = 0; j < 100; j++)
             {
-                blocks[startingPoint + i, 20, startingPoint + j] = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
-                blocks[startingPoint + i, 20, startingPoint + j].transform.position = new Vector3(startingPoint + i, 20, startingPoint + j);
-                blocks[startingPoint + i, 20, startingPoint + j].transform.parent = GameObject.Find("Map").transform;
-                blocks[startingPoint + i, 20, startingPoint + j].GetComponent<block>().healthPoint = 100f;
+                GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
+                temp.transform.position = new Vector3(startingPoint + i, 20, startingPoint + j);
+                temp.transform.parent = GameObject.Find("Map").transform;
+                temp.GetComponent<block>().healthPoint = temp.GetComponent<block>().maxHealthPoint = 100f;
+
+                blocks[startingPoint + i, 20, startingPoint + j] = temp;
             }
         }
     }
@@ -46,8 +48,11 @@ public class BlockManager : MonoBehaviour
         int layerMask = 1 << LayerMask.NameToLayer("TranslucentBlock");// TranslucentBlock레이어만 무시하고 충돌
         layerMask = ~layerMask;
 
+        //Ray ray = new Ray(transform.position, transform.forward);
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));//Ray를 쏠 지점을 화면의 정가운데로 한다
         //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        //ray.direction += new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f)); //ray.direction의 값은 normalized 되어 있기 때문에 쏘는 방향을 다르게 해주려면 저렇게 해줘야됨
 
         if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 5f, layerMask))
         {
@@ -63,12 +68,16 @@ public class BlockManager : MonoBehaviour
 
                 else if (Input.GetMouseButton(0))
                     ClickDestroyBlock(htp);
+
+                else if (Input.GetMouseButtonUp(0))
+                    if (hitBlock != null)
+                        hitBlock.healthPoint = hitBlock.maxHealthPoint;
             }
         }
         else
             ghostBlock.MeshRenderer.enabled = false;
-
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 10f, Color.blue, 0.3f);
+        Debug.Log(ray.direction);
+        Debug.DrawRay(ray.origin, ray.direction * 5f, Color.blue, 0.3f);
     }
 
     private void ClickMakeBlock(Vector3 installBlockPos, Vector3 htp)
@@ -78,7 +87,7 @@ public class BlockManager : MonoBehaviour
 
         GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
         temp.transform.position = installBlockPos;
-        temp.GetComponent<block>().healthPoint = 100f;
+        temp.GetComponent<block>().healthPoint = temp.GetComponent<block>().maxHealthPoint = 100f;
         temp.GetComponent<MeshRenderer>().material.color = changeImage.color;
         temp.GetComponent<MeshRenderer>().material.mainTexture = changeImage.ghostBlockMaterial.mainTexture;
         if (changeImage.imageNum.Equals(8))
@@ -94,11 +103,16 @@ public class BlockManager : MonoBehaviour
         if (hitBlock == blocks[(int)htp.x, (int)htp.y, (int)htp.z].GetComponent<block>())
             Debug.Log("same block");
         else
-            Debug.Log("different block");
+        {
+            if (hitBlock == null)
+                hitBlock = blocks[(int)htp.x, (int)htp.y, (int)htp.z].GetComponent<block>();
+
+            hitBlock.healthPoint = hitBlock.maxHealthPoint;
+        }
 
         hitBlock = blocks[(int)htp.x, (int)htp.y, (int)htp.z].GetComponent<block>();
         hitBlock.healthPoint--;
-
+        Debug.Log(hitBlock.healthPoint);
         if (hitBlock.healthPoint <= 0f)
         {
             Destroy(blocks[(int)htp.x, (int)htp.y, (int)htp.z]);
@@ -119,7 +133,6 @@ public class BlockManager : MonoBehaviour
 
         return new Vector3(htp.x, htp.y, htp.z);
     }
-
 
     private bool IsBlockNone(int x, int y, int z, Vector3 htp)
     {

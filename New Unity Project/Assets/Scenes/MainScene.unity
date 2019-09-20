@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 465629c66d24ab24d835bdc70afd931c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mCube: {fileID: 2090426980}
+  ghostBlock: {fileID: 0}
   changeImage: {fileID: 0}
   startingPoint: 148
 --- !u!23 &444363607
@@ -641,7 +641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 465629c66d24ab24d835bdc70afd931c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mCube: {fileID: 2090426980}
+  ghostBlock: {fileID: 2090426980}
   changeImage: {fileID: 463397032}
   startingPoint: 100
 --- !u!4 &463397038 stripped

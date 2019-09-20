@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class block : MonoBehaviour
 {
+    public float maxHealthPoint;
     public float healthPoint;
 }
