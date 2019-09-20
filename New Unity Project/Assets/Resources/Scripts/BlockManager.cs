@@ -21,7 +21,6 @@ public class BlockManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
         Cursor.visible = false;
-
     }
 
     void Start()
@@ -33,10 +32,9 @@ public class BlockManager : MonoBehaviour
         {
             for (int j = 0; j < 100; j++)
             {
-                GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
+                GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/0"));
                 temp.transform.position = new Vector3(startingPoint + i, 20, startingPoint + j);
                 temp.transform.parent = GameObject.Find("Map").transform;
-                temp.GetComponent<block>().healthPoint = temp.GetComponent<block>().maxHealthPoint = 100f;
 
                 blocks[startingPoint + i, 20, startingPoint + j] = temp;
             }
@@ -76,7 +74,7 @@ public class BlockManager : MonoBehaviour
         }
         else
             ghostBlock.MeshRenderer.enabled = false;
-        Debug.Log(ray.direction);
+
         Debug.DrawRay(ray.origin, ray.direction * 5f, Color.blue, 0.3f);
     }
 
@@ -85,13 +83,9 @@ public class BlockManager : MonoBehaviour
         if (!IsBlockNone((int)installBlockPos.x, (int)installBlockPos.y, (int)installBlockPos.z, htp) || ghostBlock.GetComponent<GhostBlock>().InPlayer)
             return;
 
-        GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Cube"));
+        GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/" + changeImage.imageNum.ToString()));
         temp.transform.position = installBlockPos;
-        temp.GetComponent<block>().healthPoint = temp.GetComponent<block>().maxHealthPoint = 100f;
         temp.GetComponent<MeshRenderer>().material.color = changeImage.color;
-        temp.GetComponent<MeshRenderer>().material.mainTexture = changeImage.ghostBlockMaterial.mainTexture;
-        if (changeImage.imageNum.Equals(8))
-            temp.GetComponent<MeshRenderer>().material.shader = glassShader;
 
         blocks[(int)installBlockPos.x, (int)installBlockPos.y, (int)installBlockPos.z] = temp;
 

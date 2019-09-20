@@ -62,11 +62,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\block.cs" />
-    <Compile Include="Assets\BlockManager.cs" />
-    <Compile Include="Assets\CameraMove.cs" />
-    <Compile Include="Assets\ChangeImage.cs" />
-    <Compile Include="Assets\GhostBlock.cs" />
+    <Compile Include="Assets\Resources\Scripts\block.cs" />
+    <Compile Include="Assets\Resources\Scripts\BlockManager.cs" />
+    <Compile Include="Assets\Resources\Scripts\CameraMove.cs" />
+    <Compile Include="Assets\Resources\Scripts\ChangeImage.cs" />
+    <Compile Include="Assets\Resources\Scripts\GhostBlock.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\Diamond.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\Emerald.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\Glass.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\GlowStone.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\Gold.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\NetherRack.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\Obsidian.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\Sand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\Soil.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\Stone.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />

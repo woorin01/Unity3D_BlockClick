@@ -29,7 +29,7 @@ public class CameraMove : MonoBehaviour
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);
         }
-
+        
         GameObject.FindWithTag("Respawn").transform.position = new Vector3(transform.position.x, 180, transform.position.z);
     }
 
