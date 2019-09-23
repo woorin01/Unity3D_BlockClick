@@ -71,6 +71,7 @@
     <Compile Include="Assets\Resources\Scripts\Ore\Glass.cs" />
     <Compile Include="Assets\Resources\Scripts\Ore\GlowStone.cs" />
     <Compile Include="Assets\Resources\Scripts\Ore\Gold.cs" />
+    <Compile Include="Assets\Resources\Scripts\Ore\Iron.cs" />
     <Compile Include="Assets\Resources\Scripts\Ore\NetherRack.cs" />
     <Compile Include="Assets\Resources\Scripts\Ore\Obsidian.cs" />
     <Compile Include="Assets\Resources\Scripts\Ore\Sand.cs" />

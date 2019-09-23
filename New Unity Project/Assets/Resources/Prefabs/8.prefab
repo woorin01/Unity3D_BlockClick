@@ -105,5 +105,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f730724fc9584346be57ea0c2e1a074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealthPoint: 90
-  healthPoint: 90
+  maxHealthPoint: 15
+  healthPoint: 15

@@ -11,10 +11,12 @@ public class BlockManager : MonoBehaviour
 
     private Shader glassShader;
     private block hitBlock;
+    private Transform map;
 
     private void Awake()
     {
         glassShader = Shader.Find("Unlit/Transparent");
+        map = GameObject.FindGameObjectWithTag("Map").transform;
 
         Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
         Cursor.visible = false;
@@ -26,9 +28,9 @@ public class BlockManager : MonoBehaviour
         {
             for (int j = 0; j < 100; j++)
             {
-                GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/0"));
+                GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/6"));
                 temp.transform.position = new Vector3(startingPoint + i, 20, startingPoint + j);
-                temp.transform.parent = GameObject.Find("Map").transform;
+                temp.transform.parent = map;
             }
         }
     }
@@ -72,6 +74,7 @@ public class BlockManager : MonoBehaviour
         Debug.Log(Vector3.Distance(transform.position, installPos));
         GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/" + changeImage.imageNum.ToString()));
         temp.transform.position = installPos;
+        temp.transform.parent = map;
         temp.GetComponent<MeshRenderer>().material.color = changeImage.color;
     }
 
