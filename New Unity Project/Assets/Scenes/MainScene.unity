@@ -272,6 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeImage: {fileID: 0}
   startingPoint: 148
+  a: {fileID: 0}
 --- !u!23 &444363607
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -943,5 +944,55 @@ PrefabInstance:
       propertyPath: image
       value: 
       objectReference: {fileID: 1814006577}
+    - target: {fileID: 7593816921631700063, guid: 7dd3808d21747f84396fedec498fa20c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5436798
+      objectReference: {fileID: 0}
+    - target: {fileID: 7593816921631700063, guid: 7dd3808d21747f84396fedec498fa20c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.019230954
+      objectReference: {fileID: 0}
+    - target: {fileID: 7593816921631700063, guid: 7dd3808d21747f84396fedec498fa20c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.13508299
+      objectReference: {fileID: 0}
+    - target: {fileID: 7593816921631700063, guid: 7dd3808d21747f84396fedec498fa20c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8281275
+      objectReference: {fileID: 0}
+    - target: {fileID: 7593816921631700063, guid: 7dd3808d21747f84396fedec498fa20c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 64.913
+      objectReference: {fileID: 0}
+    - target: {fileID: 7593816921631700063, guid: 7dd3808d21747f84396fedec498fa20c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -15.742001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7593816921631700063, guid: 7dd3808d21747f84396fedec498fa20c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -28.579
+      objectReference: {fileID: 0}
+    - target: {fileID: 3291237551379114640, guid: 7dd3808d21747f84396fedec498fa20c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753788933511352369, guid: 7dd3808d21747f84396fedec498fa20c,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753788932252755975, guid: 7dd3808d21747f84396fedec498fa20c,
+        type: 3}
+      propertyPath: a
+      value: 
+      objectReference: {fileID: 7400000, guid: a95b8b9ab51d72246bf03e140ebd6d51, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dd3808d21747f84396fedec498fa20c, type: 3}

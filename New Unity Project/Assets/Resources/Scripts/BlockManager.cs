@@ -12,11 +12,13 @@ public class BlockManager : MonoBehaviour
     private Shader glassShader;
     private block hitBlock;
     private Transform map;
+    private Animator animator;
 
     private void Awake()
     {
         glassShader = Shader.Find("Unlit/Transparent");
         map = GameObject.FindGameObjectWithTag("Map").transform;
+        animator = GetComponent<Animator>();
 
         Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
         Cursor.visible = false;
@@ -39,12 +41,13 @@ public class BlockManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        //if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.Q))
             ClickMakeBlock();
 
         if (Input.GetMouseButton(0))
             DestroyBlock();
-
+        
         if (Input.GetMouseButtonUp(0))
             StopDestroyBlock(hitBlock);
 
@@ -59,7 +62,7 @@ public class BlockManager : MonoBehaviour
             {
                 Vector3 installPos = hit.transform.position;
                 installPos += hit.normal;
-                
+
                 foreach (Transform child in map)
                     if (child.position.Equals(installPos))
                         return;
@@ -67,11 +70,12 @@ public class BlockManager : MonoBehaviour
                 if (Vector3.Distance(transform.position, installPos) <= 1.05f)
                     return;
 
-                Debug.Log(Vector3.Distance(transform.position, installPos));
                 GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/" + changeImage.imageNum.ToString()));
                 temp.transform.position = installPos;
                 temp.transform.parent = map;
                 temp.GetComponent<MeshRenderer>().material.color = changeImage.color;
+
+                animator.SetBool("isHit", true);
             }
         }
     }
@@ -91,9 +95,14 @@ public class BlockManager : MonoBehaviour
                     StopDestroyBlock(hitBlock);
                     hitBlock = block;
                 }
+                Debug.Log("update");
+                if(!animator.GetBool("isHit"))
+                {
+                    Debug.Log("true"); animator.SetBool("isHit", true);
+
+                }
 
                 hitBlock.healthPoint--;
-                Debug.Log(hitBlock.healthPoint);
                 if (hitBlock.healthPoint <= 0f)
                     Destroy(hitBlock.gameObject);
             }
@@ -108,6 +117,15 @@ public class BlockManager : MonoBehaviour
         block.healthPoint = block.maxHealthPoint;
     }
 
+    public void HitAnimationDone() { StartCoroutine("Late2"); }
+
+    IEnumerator Late2()
+    {
+        Debug.Log("call");
+        yield return null;
+        Debug.Log("stop");
+        animator.SetBool("isHit", false);
+    }
     //private void ClickDestroyBlock(block block, Vector3 htp)
     //{
     //    if (hitBlock == block)
