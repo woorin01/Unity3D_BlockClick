@@ -41,8 +41,7 @@ public class BlockManager : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetMouseButtonDown(1))
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetMouseButtonDown(1))
             ClickMakeBlock();
 
         if (Input.GetMouseButton(0))
@@ -122,7 +121,7 @@ public class BlockManager : MonoBehaviour
     IEnumerator Late2()
     {
         Debug.Log("call");
-        yield return null;
+        yield return null;//다음 프레임 업데이트가 끝날때 까지 대기
         Debug.Log("stop");
         animator.SetBool("isHit", false);
     }

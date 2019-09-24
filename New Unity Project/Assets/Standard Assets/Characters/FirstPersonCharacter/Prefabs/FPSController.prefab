@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 8753788932253379720}
   - component: {fileID: 8753788932255150248}
   - component: {fileID: 8753788932242915054}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FirstPersonCharacter
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
