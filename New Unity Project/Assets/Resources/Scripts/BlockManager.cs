@@ -32,7 +32,7 @@ public class BlockManager : MonoBehaviour
         {
             for (int j = 0; j < 100; j++)
             {
-                GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/6"));
+                GameObject temp = Instantiate(Resources.Load<GameObject>("Prefabs/6"));
                 temp.transform.position = new Vector3(startingPoint + i, 20, startingPoint + j);
                 temp.transform.parent = map;
             }
@@ -42,7 +42,7 @@ public class BlockManager : MonoBehaviour
         {
             for (int j = 0; j < 100; j++)
             {
-                GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/2"));
+                GameObject temp = Instantiate(Resources.Load<GameObject>("Prefabs/2"));
                 temp.transform.position = new Vector3(startingPoint + i, 10, startingPoint + j);
                 temp.transform.parent = map;
             }
@@ -58,7 +58,7 @@ public class BlockManager : MonoBehaviour
             DestroyBlock();
 
         if (Input.GetMouseButtonUp(0))
-            StopDestroyBlock(hitBlock);
+            StopDestroyBlock();
 
     }
 
@@ -68,7 +68,7 @@ public class BlockManager : MonoBehaviour
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 5.5f))
             if (hit.transform.gameObject.CompareTag("Player"))
                 return true;
-
+        
         return false;
     }
 
@@ -86,11 +86,10 @@ public class BlockManager : MonoBehaviour
                 if (child.position.Equals(installPos))
                     return;
 
-            GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/" + changeImage.imageNum.ToString()));
+            GameObject temp = Instantiate(Resources.Load<GameObject>("Prefabs/" + changeImage.imageNum.ToString()));
             temp.transform.position = installPos;
             temp.transform.parent = map;
-            Material m = temp.GetComponent<MeshRenderer>().material;
-            m.color = changeImage.color;
+            temp.GetComponent<MeshRenderer>().material.color = changeImage.color;
             
             animator.SetBool("isHit", true);
         }
@@ -106,7 +105,7 @@ public class BlockManager : MonoBehaviour
                 hitBlock = block;
             if (hitBlock != block)
             {
-                StopDestroyBlock(hitBlock);
+                StopDestroyBlock();
                 hitBlock = block;
             }
             Debug.Log("update");
@@ -123,17 +122,16 @@ public class BlockManager : MonoBehaviour
         }
     }
 
-    private void StopDestroyBlock(block block)
+    private void StopDestroyBlock()
     {
-        if (block == null)
+        if (hitBlock == null)
             return;
 
-        block.healthPoint = block.maxHealthPoint;
+        hitBlock.healthPoint = hitBlock.maxHealthPoint;
     }
 
     public void HitAnimationDone() { StartCoroutine("Late2"); }
-
-    IEnumerator Late2()
+    private IEnumerator Late2()
     {
         Debug.Log("call");
         yield return null;//다음 프레임 업데이트가 끝날때 까지 대기
