@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 8753788932241890120}
   - component: {fileID: 8753788932257844680}
   - component: {fileID: 8753788932255577928}
+  - component: {fileID: 1529703943255755915}
   - component: {fileID: 8753788932252755974}
   - component: {fileID: 8753788932252755975}
-  - component: {fileID: 1529703943255755915}
   m_Layer: 0
   m_Name: FPSController
   m_TagString: Finish
@@ -325,6 +325,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!95 &1529703943255755915
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8753788932252659368}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 14b384d36daa5f8428c58771d8bd3b06, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &8753788932252755974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,25 +375,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeImage: {fileID: 8753788932252755974}
   startingPoint: 100
---- !u!95 &1529703943255755915
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8753788932252659368}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 14b384d36daa5f8428c58771d8bd3b06, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8753788932252659370
 GameObject:
   m_ObjectHideFlags: 0

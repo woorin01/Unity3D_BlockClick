@@ -61,6 +61,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
+            ControlSpeed();
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
@@ -83,6 +84,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
+        private void ControlSpeed()
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                m_WalkSpeed *= 0.5f;
+                m_RunSpeed *= 0.5f;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                m_WalkSpeed *= 2;
+                m_RunSpeed *= 2;
+            }
+
+        }
 
         private void PlayLandingSound()
         {

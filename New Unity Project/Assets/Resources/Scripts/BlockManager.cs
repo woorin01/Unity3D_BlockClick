@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//벽을 뚫어서 설치됨
-//그래서 중복 설치도 됨
+//카메라가 벽을 뚫음
+
 public class BlockManager : MonoBehaviour
 {
     public ChangeImage changeImage;
@@ -22,7 +22,7 @@ public class BlockManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
         Cursor.visible = false;
-        
+
         //start1, coroutine1, start2, update1, update1, coroutine2
     }
 
@@ -37,74 +37,89 @@ public class BlockManager : MonoBehaviour
                 temp.transform.parent = map;
             }
         }
+
+        for (int i = 0; i < 100; i++)
+        {
+            for (int j = 0; j < 100; j++)
+            {
+                GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/2"));
+                temp.transform.position = new Vector3(startingPoint + i, 10, startingPoint + j);
+                temp.transform.parent = map;
+            }
+        }
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
-            ClickMakeBlock();
+            MakeBlock();
 
         if (Input.GetMouseButton(0))
             DestroyBlock();
-        
+
         if (Input.GetMouseButtonUp(0))
             StopDestroyBlock(hitBlock);
 
     }
 
-    private void ClickMakeBlock()
+    private bool IsRayHitBlock(out RaycastHit hit)
     {
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-        if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 5.5f))
-        {
+        if (Physics.Raycast(ray.origin, ray.direction, out hit, 5.5f))
             if (hit.transform.gameObject.CompareTag("Player"))
-            {
-                Vector3 installPos = hit.transform.position;
-                installPos += hit.normal;
+                return true;
 
-                foreach (Transform child in map)
-                    if (child.position.Equals(installPos))
-                        return;
+        return false;
+    }
 
-                if (Vector3.Distance(transform.position, installPos) <= 1.05f)
+    private void MakeBlock()
+    {
+        if (IsRayHitBlock(out RaycastHit hit))
+        {
+            Vector3 installPos = hit.transform.position;
+            installPos += hit.normal;
+
+            if (Vector3.Distance(transform.position, installPos) <= 1.05f)
+                return;
+
+            foreach (Transform child in map)
+                if (child.position.Equals(installPos))
                     return;
 
-                GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/" + changeImage.imageNum.ToString()));
-                temp.transform.position = installPos;
-                temp.transform.parent = map;
-                temp.GetComponent<MeshRenderer>().material.color = changeImage.color;
-
-                animator.SetBool("isHit", true);
-            }
+            GameObject temp = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/" + changeImage.imageNum.ToString()));
+            temp.transform.position = installPos;
+            temp.transform.parent = map;
+            Material m = temp.GetComponent<MeshRenderer>().material;
+            m.color = changeImage.color;
+            
+            animator.SetBool("isHit", true);
         }
+
     }
 
     private void DestroyBlock()
     {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-        if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 7f))
+        if (IsRayHitBlock(out RaycastHit hit))
         {
-            if (hit.transform.gameObject.CompareTag("Player"))
+            block block = hit.transform.GetComponent<block>();
+            if (hitBlock == null)
+                hitBlock = block;
+            if (hitBlock != block)
             {
-                block block = hit.transform.GetComponent<block>();
-                if (hitBlock == null)
-                    hitBlock = block;
-                if (hitBlock != block)
-                {
-                    StopDestroyBlock(hitBlock);
-                    hitBlock = block;
-                }
-                Debug.Log("update");
-                if(!animator.GetBool("isHit"))
-                {
-                    Debug.Log("true"); animator.SetBool("isHit", true);
-
-                }
-
-                hitBlock.healthPoint--;
-                if (hitBlock.healthPoint <= 0f)
-                    Destroy(hitBlock.gameObject);
+                StopDestroyBlock(hitBlock);
+                hitBlock = block;
             }
+            Debug.Log("update");
+            if (!animator.GetBool("isHit"))
+            {
+                Debug.Log("true");
+                animator.SetBool("isHit", true);
+            }
+
+            hitBlock.healthPoint--;
+            if (hitBlock.healthPoint <= 0f)
+                Destroy(hitBlock.gameObject);
+
         }
     }
 
