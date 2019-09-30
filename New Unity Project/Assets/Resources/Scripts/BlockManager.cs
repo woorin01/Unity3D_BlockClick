@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //카메라가 벽을 뚫음
-
 public class BlockManager : MonoBehaviour
 {
     public ChangeImage changeImage;
@@ -24,9 +23,10 @@ public class BlockManager : MonoBehaviour
         Cursor.visible = false;
 
         //start1, coroutine1, start2, update1, update1, coroutine2
+
     }
 
-    void Start()
+    private void Start()
     {
         for (int i = 0; i < 100; i++)
         {
@@ -49,7 +49,7 @@ public class BlockManager : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetMouseButtonDown(1))
             MakeBlock();
@@ -66,12 +66,12 @@ public class BlockManager : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 5.5f))
-            if (hit.transform.gameObject.CompareTag("Player"))
+            if (hit.transform.CompareTag("Player"))
                 return true;
-        
+
         return false;
     }
-
+   
     private void MakeBlock()
     {
         if (IsRayHitBlock(out RaycastHit hit))
@@ -90,10 +90,9 @@ public class BlockManager : MonoBehaviour
             temp.transform.position = installPos;
             temp.transform.parent = map;
             temp.GetComponent<MeshRenderer>().material.color = changeImage.color;
-            
+
             animator.SetBool("isHit", true);
         }
-
     }
 
     private void DestroyBlock()

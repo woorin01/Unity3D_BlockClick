@@ -29,7 +29,7 @@ public class CameraMove : MonoBehaviour
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);
         }
-        
+
         GameObject.FindWithTag("Respawn").transform.position = new Vector3(transform.position.x, 180, transform.position.z);
     }
 
@@ -55,7 +55,7 @@ public class CameraMove : MonoBehaviour
         float y = Input.GetAxis("Mouse X");
 
         Vector3 temp = new Vector3(x, y) * 1.5f;
-        
+
         //PlayerMotor.RotatePC(temp) { rot += temp; }
         gap += temp;
         gap.x = Mathf.Clamp(gap.x, -90f, 90f);
